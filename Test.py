@@ -30,6 +30,28 @@ def monthToInt(month):
             return 11
         case "Dezember":
             return 12
+        
+        
+def median(data):
+    data.sort()
+    length = len(data)
+    if length % 2:
+        return data[int(len(data) / 2)]
+    else:
+        median = (data[length / 2] + data[length / 2 - 1]) / 2
+        return median
+
+
+def arithmeticMean(data):
+    for i in data:
+        returnValue *= i
+    return (returnValue / len(data))
+
+
+def modus(data):
+    data.sort(reversed = True)
+    return data[0]
+    
 
 steinkohleErzeugung = []        #monatliche Erzeugung von Steinkohlestrom
 gesamtErzeugung = []            #monatliche Gesamtproduktion an Strom
