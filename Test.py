@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mpl_dates
 import matplotlib.ticker as mpl_tick
 import datetime
+from statistics import mean, median, mode, multimode
+import numpy as np
+import pandas as pd
 
 #Funktion um einen Monat als String in einen Integer Wert umzuwandeln
 def monthToInt(month):
@@ -31,26 +34,41 @@ def monthToInt(month):
         case "Dezember":
             return 12
         
-        
-def median(data):
-    data.sort()
-    length = len(data)
-    if length % 2:
-        return data[int(len(data) / 2)]
-    else:
-        median = (data[length / 2] + data[length / 2 - 1]) / 2
-        return median
 
-
-def arithmeticMean(data):
+def abweichungMedian(data):     # gibt die mittlere Abweichung vom Median zurück
+    median = median(data)
     for i in data:
-        returnValue *= i
-    return (returnValue / len(data))
+        returnValue += abs(i - median)
+    return returnValue / len(data)
 
+def quartile(data):             # gibt die 25% 50% und 75% quartile zurück
+    data.sort()
+    lenght = len(data)
+    quart1 = int(lenght / 4)
+    quart2 = int(lenght / 2)
+    quart3 = int(lenght * 0.75)
+    return [data[quart1], data[quart2], data[quart3]]
 
-def modus(data):
-    data.sort(reversed = True)
-    return data[0]
+def dezile(data):               # gibt alle 9 Dezile zurück
+    length = len(data)
+    returnValue = []
+    i = 0.1
+    while i < 1:
+        returnValue.append(data[int(length * i)])
+        i += 0.1
+    return returnValue
+
+def variationsKoeffizient(data):
+    return np.std(data) / mean(data)
+
+def korrelationsKoeffizient(data, data2):
+    return np.cov(data, data2) / (np.std(data) * np.std(data2))
+
+# statistic Funktionen https://www.python4data.science/de/latest/workspace/pandas/descriptive-statistics.html
+
+# bestimmen des Modus durch mode() wenn nur der erste Modus bestimmt werden soll, multimode() wenn eine Liste aller Modus bestimmt werden soll    
+# berechenn des Median durch median()
+# berechnen des Mittelwerts durch mean()
     
 
 steinkohleErzeugung = []        #monatliche Erzeugung von Steinkohlestrom
