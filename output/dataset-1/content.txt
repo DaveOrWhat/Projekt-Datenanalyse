@@ -1,0 +1,39 @@
+Variable Jahr: 
+Modus: 2002
+arithmetischer Mittelwert: 2012.500
+Median: 2012.500
+Spannweite: 21
+Mittlere Abweichung vom Median: 5.500
+Stichprobenvarianz: 40.250
+Variationskoeffizient: 0.003
+Kovarianz: 40.869
+Quartile: 2007, 2013, 2018, 2023, 
+Dezile: 2004, 2006, 2008, 2010, 2013, 2015, 2017, 2019, 2021, 2023, 
+
+
+Variable Monat: 
+Modus: 4
+arithmetischer Mittelwert: 8.000
+Median: 8.000
+Spannweite: 8
+Mittlere Abweichung vom Median: 2.667
+Stichprobenvarianz: 10.667
+Variationskoeffizient: 0.408
+Kovarianz: 10.831
+Quartile: 4, 8, 12, 12, 
+Dezile: 4, 4, 4, 8, 8, 8, 12, 12, 12, 12, 
+
+
+Variable Elektrizizaetserzeugung netto in MWh: 
+Modus: 9567448
+arithmetischer Mittelwert: 7145764.364
+Median: 7844663.000
+Spannweite: 9821158
+Mittlere Abweichung vom Median: 2129084.939
+Stichprobenvarianz: 6528443217279.838
+Variationskoeffizient: 0.358
+Kovarianz: 6628880805237.989
+Quartile: 5469250, 7951870, 9354832, 11142512, 
+Dezile: 3220259, 5062261, 5926543, 6526260, 7951870, 8315228, 8884229, 9567448, 9921218, 11142512, 
+
+

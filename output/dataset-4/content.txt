@@ -1,0 +1,26 @@
+Variable Zeit: 
+Modus: 0
+arithmetischer Mittelwert: 16.500
+Median: 16.545
+Spannweite: 32
+Mittlere Abweichung vom Median: 8.099
+Stichprobenvarianz: 87.695
+Variationskoeffizient: 0.568
+Kovarianz: 88.133
+Quartile: 8, 16, 24, 32, 
+Dezile: 3, 6, 10, 13, 16, 19, 22, 26, 29, 32, 
+
+
+Variable lux: 
+Modus: 3127
+arithmetischer Mittelwert: 2743.011
+Median: 3127.005
+Spannweite: 3727
+Mittlere Abweichung vom Median: 834.894
+Stichprobenvarianz: 1335300.596
+Variationskoeffizient: 0.421
+Kovarianz: 1341977.099
+Quartile: 2226, 3127, 3659, 3885, 
+Dezile: 364, 2038, 2465, 3102, 3127, 3248, 3538, 3734, 3847, 3885, 
+
+

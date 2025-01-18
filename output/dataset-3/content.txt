@@ -1,0 +1,52 @@
+Variable Jahr: 
+Modus: 1992
+arithmetischer Mittelwert: 1995.267
+Median: 1995.000
+Spannweite: 7
+Mittlere Abweichung vom Median: 1.867
+Stichprobenvarianz: 4.729
+Variationskoeffizient: 0.001
+Kovarianz: 4.782
+Quartile: 1993, 1995, 1997, 1999, 
+Dezile: 1992, 1993, 1994, 1995, 1995, 1996, 1997, 1998, 1998, 1999, 
+
+
+Variable Monat: 
+Modus: 1
+arithmetischer Mittelwert: 6.300
+Median: 6.000
+Spannweite: 11
+Mittlere Abweichung vom Median: 2.967
+Stichprobenvarianz: 11.877
+Variationskoeffizient: 0.547
+Kovarianz: 12.010
+Quartile: 3, 6, 9, 12, 
+Dezile: 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 
+
+
+Variable Anzahl an Unterkünften: 
+Modus: 4545298
+arithmetischer Mittelwert: 7840121.300
+Median: 7952325.000
+Spannweite: 6560767
+Mittlere Abweichung vom Median: 1884820.367
+Stichprobenvarianz: 4131273292412.788
+Variationskoeffizient: 0.259
+Kovarianz: 4177692093451.133
+Quartile: 5824884, 8230904, 9730772, 11100085, 
+Dezile: 5155353, 5590958, 6208138, 6938233, 8230904, 9139351, 9571054, 9905191, 10187113, 11100085, 
+
+
+Variable Anzahl an Uebernachtugnen: 
+Modus: 15509574
+arithmetischer Mittelwert: 26177643.478
+Median: 24406795.000
+Spannweite: 27705308
+Mittlere Abweichung vom Median: 7731544.411
+Stichprobenvarianz: 74160126394474.562
+Variationskoeffizient: 0.329
+Kovarianz: 74993386241603.453
+Quartile: 17561842, 24751506, 32615343, 42603257, 
+Dezile: 16304627, 17021150, 18197969, 20732955, 24751506, 30421291, 31764731, 33183942, 39970478, 42603257, 
+
+

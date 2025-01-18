@@ -1,0 +1,39 @@
+Variable Jahr: 
+Modus: 1994
+arithmetischer Mittelwert: 2008.754
+Median: 2009.000
+Spannweite: 30
+Mittlere Abweichung vom Median: 7.623
+Stichprobenvarianz: 77.562
+Variationskoeffizient: 0.004
+Kovarianz: 78.855
+Quartile: 2001, 2009, 2016, 2024, 
+Dezile: 1997, 2000, 2003, 2006, 2009, 2012, 2015, 2018, 2021, 2024, 
+
+
+Variable Monat: 
+Modus: 1
+arithmetischer Mittelwert: 6.410
+Median: 1.000
+Spannweite: 11
+Mittlere Abweichung vom Median: 5.410
+Stichprobenvarianz: 30.242
+Variationskoeffizient: 0.858
+Kovarianz: 30.746
+Quartile: 1, 1, 12, 12, 
+Dezile: 1, 1, 1, 1, 1, 12, 12, 12, 12, 12, 
+
+
+Variable Beschaeftigte prozentual zu 2015: 
+Modus: 165
+arithmetischer Mittelwert: 116.020
+Median: 102.900
+Spannweite: 80
+Mittlere Abweichung vom Median: 16.500
+Stichprobenvarianz: 604.595
+Variationskoeffizient: 0.212
+Kovarianz: 614.671
+Quartile: 100, 102, 124, 171, 
+Dezile: 97, 99, 100, 102, 102, 105, 114, 132, 165, 171, 
+
+
