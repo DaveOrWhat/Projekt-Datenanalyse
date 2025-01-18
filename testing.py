@@ -1,3 +1,4 @@
-test = 15 / 2
+array = [[1,2,3], [4,5,6]]
+print(array[0])
 
-print(int(test))
+print(len(array))
