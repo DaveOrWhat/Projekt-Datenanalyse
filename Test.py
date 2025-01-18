@@ -5,6 +5,7 @@ import datetime
 from statistics import mean, median, mode, multimode
 import numpy as np
 import pandas as pd
+import csv
 
 
 
@@ -75,19 +76,19 @@ def abweichungMedian(data):     # gibt die mittlere Abweichung vom Median zurüc
     return returnValue / len(data)
 
 def quartile(data):             # gibt die 25% 50% und 75% quartile zurück
-    data.sort()
+    array = data
+    array.sort()
     lenght = len(data)
-    quart1 = int(lenght / 4)
-    quart2 = int(lenght / 2)
-    quart3 = int(lenght * 0.75)
-    return [data[quart1], data[quart2], data[quart3]]
+    return [array[int(lenght / 4)], array[int(lenght / 2)], array[int(lenght * 0.75)], array[lenght - 1]]
 
 def dezile(data):               # gibt alle 9 Dezile zurück
     length = len(data)
+    array = data
+    array.sort()
     returnValue = []
     i = 0.1
     while i < 1:
-        returnValue.append(data[int(length * i)])
+        returnValue.append(array[int(length * i)])
         i += 0.1
     return returnValue
 
@@ -97,18 +98,18 @@ def variationsKoeffizient(data):
 def korrelationsKoeffizient(data, data2):
     return np.cov(data, data2) / (np.std(data) * np.std(data2))
 
-def readFromDataToArray(data, array, dataSet):     #diese Funktion ist spezeill auf die jeweiligen Datensätze angepasst
+def readFromDataToArray(data, array, dataSet):     #diese Funktion ist speziell auf die jeweiligen Datensätze angepasst
     i = 0
     if dataSet == 1:
         for zeile in data:
             if i > 1:
-                temp = zeile.split(";")
+                temp = zeile.split(",")
                 array.append([int(temp[0]), monthToInt(temp[1]), int(temp[3])])
             i += 1
     elif dataSet == 2:
         for zeile in data:
             if i > 1:
-                temp = zeile.split(";")
+                temp = zeile.split(",")
                 try:    #falls das Jahr nicht in ein int Wert gewandelt wird, wird das Jahr auf 0 gesetzt
                     jahr = int(temp[0])
                 except ValueError:
@@ -123,13 +124,19 @@ def readFromDataToArray(data, array, dataSet):     #diese Funktion ist spezeill 
             i += 1
     elif dataSet == 3:
         for zeile in data:
-            temp = zeile.split(";")
+            temp = zeile.split(",")
             array.append([temp[0], int(temp[1]), monthToInt(temp[2].replace("\n", ""))])
-    elif dataSet == 4:
+    elif dataSet == 31:
         for zeile in data:
             if i > 1:
-                temp = zeile.split(";")
+                temp = zeile.split(",")
                 array.append([temp[0], int(temp[1]), int(temp[2])])
+            i += 1
+    elif dataSet == 4:
+        for zeile in data:
+            if i > 0:
+                temp = zeile.split(",")
+                array.append([float(temp[0]), float(temp[1])])
             i += 1
     return array
 
@@ -166,9 +173,90 @@ def outputToFile(fileName, array, beschreibung):
         for content in array:
             temp.append(content[i])
             
-        file.write("%s\nModus: %d\narithmetischer Mittelwert: %.3f\nMedian: %.3f\nSpannweite: %d\nMittlere Abweichung vom Median: %.3f\nStichprobenvarianz: %.3f\nVariationskoeffizient: %.3f\n\n\n" % (beschreibungEinzeln[i], mode(temp), mean(temp), median(temp), max(temp) - min(temp), abweichungMedian(temp), pd.var(temp), variationsKoeffizient(temp)))
+        file.write("%s\nModus: %d\narithmetischer Mittelwert: %.3f\nMedian: %.3f\nSpannweite: %d\nMittlere Abweichung vom Median: %.3f\nStichprobenvarianz: %.3f\nVariationskoeffizient: %.3f\nKovarianz: %.3f\n" % (beschreibungEinzeln[i], mode(temp), np.mean(temp), np.median(temp), max(temp) - min(temp), abweichungMedian(temp), np.var(temp), variationsKoeffizient(temp), np.cov(temp)))
+        file.write("Quartile: ")
+        for data in quartile(temp):
+            file.write("%d, " % (data))
+        file.write("\nDezile: ")
+        for data in dezile(temp):
+            file.write("%d, " % (data))
+        file.write("\n\n\n")
         i += 1
     file.close()
+            
+    
+def boxWhiskerPlot(filePath, fileName, data):
+    i = 0
+    while i < len(data[0]):
+        temp = []
+        newfileName = filePath
+        newfileName += fileName[i] 
+        newfileName += '.jpg'
+        for content in data:
+            temp.append(content[i])
+        plt.boxplot(temp)
+        plt.title(fileName[i])
+        plt.savefig(newfileName)
+        #plt.show()
+        i += 1
+        
+def scatterPlot(fileName, data):
+    time = []
+    value = []
+    if len(data[0]) > 3:
+        value2 = []
+    for content in data:
+        time.append(content[0])
+        value.append(content[2])
+        if len(data[0]) > 3:
+            value2.append(content[3])
+
+    plt.scatter(time, value)
+    if len(data[0]) > 3:
+        plt.scatter(time, value2, color = 'red', label = 'Uebernachtungen')
+    plt.title("First ScatterPlot")
+    
+    plt.xlabel("Jahr")
+    plt.xlim(min(time) - 1, max(time) + 1)
+    #plt.set_major_formatter(mpl_dates.DateFormatter('%Y'))
+    
+    plt.ylabel("Elektrizitätserzeung (MWh)")
+    plt.ylim(min(value) * 0.8 , max(value) * 1.1)
+    
+    
+    #plt.savefig(newfileName)
+    
+    plt.show()
+        
+def urlist(filePath, data, fileName):
+    i = 0
+    while i < len(data[0]):
+        newfileName = filePath
+        newfileName += fileName[i]
+        newfileName += '.csv'
+        with open(newfileName, 'w', newline = '') as file:
+            writer = csv.writer(file)
+            writer.writerow([fileName[i]])
+            for content in data:
+                writer.writerow([str(content[i])])
+        i += 1
+        
+def ranglist(filePath, data, fileName):
+    i = 0
+    while i < len(data[0]):
+        newfileName = filePath
+        newfileName += fileName[i]
+        newfileName += '.csv'
+        with open(newfileName, 'w', newline = '') as file:
+            writer = csv.writer(file)
+            writer.writerow([fileName[i]])
+            temp = []
+            for content in data:
+                temp.append(content[i])
+            temp.sort()
+            for content in temp:
+                writer.writerow([str(content)])
+        i += 1
             
         
 
@@ -182,6 +270,7 @@ data1Array = []
 data2Array = []
 data3Array = []
 data3bArray = []
+data4Array = []
 
 data = open('Dataset-1/data-1.csv', 'r')
 readFromDataToArray(data, data1Array, 1)
@@ -198,8 +287,14 @@ readFromDataToArray(data, data3Array, 3)
 data.close()
 
 data = open('Dataset-3/data-3-b.csv', 'r')
-readFromDataToArray(data, data3bArray, 4)
+readFromDataToArray(data, data3bArray, 31)
 data.close()
+
+data = open('Dataset-4/data-4.csv', 'r')
+readFromDataToArray(data, data4Array, 4)
+data.close()
+
+
 
 #beide Teile von Datensatz 3 kombinieren
 i = -1
@@ -213,11 +308,37 @@ for teilA in data3Array:
 
 data3Array.sort()
 
+urlist('output/dataset-1/urliste-', data1Array, ['Jahr', 'Monat', 'Elektrizitaetserzeugung'])
+urlist('output/dataset-2/urliste-', data2Array, ['Jahr', 'Monat', 'Beschaeftigte'])
+urlist('output/dataset-3/urliste-', data3Array, ['Jahr', 'Monat', 'Ankuenfte', 'Uebernachtungen'])
+urlist('output/dataset-4/urliste-', data4Array, ['Zeit', 'Lux'])
+
+ranglist('output/dataset-1/rangliste-', data1Array, ['Jahr', 'Monat', 'Elektrizitaetserzeugung'])
+ranglist('output/dataset-2/rangliste-', data2Array, ['Jahr', 'Monat', 'Beschaeftigte'])
+ranglist('output/dataset-3/rangliste-', data3Array, ['Jahr', 'Monat', 'Ankuenfte', 'Uebernachtungen'])
+ranglist('output/dataset-4/rangliste-', data4Array, ['Zeit', 'Lux'])
+
+boxWhiskerPlot('output/dataset-1/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'Elektrizizaetserzeugung-'], data1Array)
+boxWhiskerPlot('output/dataset-2/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'Beschäftigte-'], data2Array)
+boxWhiskerPlot('output/dataset-3/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'AnzahlUnterkünfte-', 'AnzahlUebernachtungen-'], data3Array)
+boxWhiskerPlot('output/dataset-4/boxWhiskerPlot-', ['Zeit-', 'Lux-'], data4Array)
+
+scatterPlot('output/dataset-3/scatterPlot.jpg', data3Array)
 
 outputToFile('output/dataset-1/content.txt', data1Array, "Variable Jahr: ;Variable Monat: ;Variable Elektrizizaetserzeugung netto in MWh: ")
 outputToFile('output/dataset-2/content.txt', data2Array, "Variable Jahr: ;Variable Monat: ;Variable Beschaeftigte prozentual zu 2015: ")
-outputToFile('output/dataset-3/content.txt', data3Array, "Variable Jahr: ;Variable Monat: ;Variable Anzahl an Unterkünften: ;Variable Anzahl an Übernachtugnen: ")
+outputToFile('output/dataset-3/content.txt', data3Array, "Variable Jahr: ;Variable Monat: ;Variable Anzahl an Unterkünften: ;Variable Anzahl an Uebernachtugnen: ")
+outputToFile('output/dataset-4/content.txt', data4Array, "Variable Zeit: ;Variable lux: ")
 
+
+
+"""
+with open('output/dataset-3/konsolidiert.csv', 'w', newline = '') as file:
+    writer = csv.writer(file, delimiter = ';')
+    for content in data3Array:
+        writer.writerow([str(content[0]), intToMonth(content[1]), str(content[2]), str(content[3])])
+    i += 1
+"""
 
 
 
