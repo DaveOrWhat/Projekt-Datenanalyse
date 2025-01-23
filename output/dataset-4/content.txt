@@ -7,8 +7,9 @@ Mittlere Abweichung vom Median: 8.099
 Stichprobenvarianz: 87.695
 Variationskoeffizient: 0.568
 Kovarianz: 88.133
-Quartile: 8, 16, 24, 32, 
-Dezile: 3, 6, 10, 13, 16, 19, 22, 26, 29, 32, 
+Quartilsabstand: 16
+Quartile: q25: 8, q50: 16, q75: 24, q100: 32, 
+Dezile: d1: 3, d2: 6, d3: 10, d4: 13, d5: 16, d6: 19, d7: 22, d8: 26, d9: 29, d10: 32, 
 
 
 Variable lux: 
@@ -20,7 +21,8 @@ Mittlere Abweichung vom Median: 834.894
 Stichprobenvarianz: 1335300.596
 Variationskoeffizient: 0.421
 Kovarianz: 1341977.099
-Quartile: 2226, 3127, 3659, 3885, 
-Dezile: 364, 2038, 2465, 3102, 3127, 3248, 3538, 3734, 3847, 3885, 
+Quartilsabstand: 1433
+Quartile: q25: 2226, q50: 3127, q75: 3659, q100: 3885, 
+Dezile: d1: 364, d2: 2038, d3: 2465, d4: 3102, d5: 3127, d6: 3248, d7: 3538, d8: 3734, d9: 3847, d10: 3885, 
 
 

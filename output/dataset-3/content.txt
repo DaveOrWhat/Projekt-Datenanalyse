@@ -7,8 +7,9 @@ Mittlere Abweichung vom Median: 1.867
 Stichprobenvarianz: 4.729
 Variationskoeffizient: 0.001
 Kovarianz: 4.782
-Quartile: 1993, 1995, 1997, 1999, 
-Dezile: 1992, 1993, 1994, 1995, 1995, 1996, 1997, 1998, 1998, 1999, 
+Quartilsabstand: 4
+Quartile: q25: 1993, q50: 1995, q75: 1997, q100: 1999, 
+Dezile: d1: 1992, d2: 1993, d3: 1994, d4: 1995, d5: 1995, d6: 1996, d7: 1997, d8: 1998, d9: 1998, d10: 1999, 
 
 
 Variable Monat: 
@@ -20,8 +21,9 @@ Mittlere Abweichung vom Median: 2.967
 Stichprobenvarianz: 11.877
 Variationskoeffizient: 0.547
 Kovarianz: 12.010
-Quartile: 3, 6, 9, 12, 
-Dezile: 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 
+Quartilsabstand: 6
+Quartile: q25: 3, q50: 6, q75: 9, q100: 12, 
+Dezile: d1: 2, d2: 3, d3: 4, d4: 5, d5: 6, d6: 7, d7: 9, d8: 10, d9: 11, d10: 12, 
 
 
 Variable Anzahl an Unterkünften: 
@@ -33,8 +35,9 @@ Mittlere Abweichung vom Median: 1884820.367
 Stichprobenvarianz: 4131273292412.788
 Variationskoeffizient: 0.259
 Kovarianz: 4177692093451.133
-Quartile: 5824884, 8230904, 9730772, 11100085, 
-Dezile: 5155353, 5590958, 6208138, 6938233, 8230904, 9139351, 9571054, 9905191, 10187113, 11100085, 
+Quartilsabstand: 3905888
+Quartile: q25: 5824884, q50: 8230904, q75: 9730772, q100: 11100085, 
+Dezile: d1: 5155353, d2: 5590958, d3: 6208138, d4: 6938233, d5: 8230904, d6: 9139351, d7: 9571054, d8: 9905191, d9: 10187113, d10: 11100085, 
 
 
 Variable Anzahl an Uebernachtugnen: 
@@ -46,7 +49,8 @@ Mittlere Abweichung vom Median: 7731544.411
 Stichprobenvarianz: 74160126394474.562
 Variationskoeffizient: 0.329
 Kovarianz: 74993386241603.453
-Quartile: 17561842, 24751506, 32615343, 42603257, 
-Dezile: 16304627, 17021150, 18197969, 20732955, 24751506, 30421291, 31764731, 33183942, 39970478, 42603257, 
+Quartilsabstand: 15053501
+Quartile: q25: 17561842, q50: 24751506, q75: 32615343, q100: 42603257, 
+Dezile: d1: 16304627, d2: 17021150, d3: 18197969, d4: 20732955, d5: 24751506, d6: 30421291, d7: 31764731, d8: 33183942, d9: 39970478, d10: 42603257, 
 
 

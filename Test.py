@@ -172,14 +172,20 @@ def outputToFile(fileName, array, beschreibung):
         temp = []
         for content in array:
             temp.append(content[i])
-            
+        
         file.write("%s\nModus: %d\narithmetischer Mittelwert: %.3f\nMedian: %.3f\nSpannweite: %d\nMittlere Abweichung vom Median: %.3f\nStichprobenvarianz: %.3f\nVariationskoeffizient: %.3f\nKovarianz: %.3f\n" % (beschreibungEinzeln[i], mode(temp), np.mean(temp), np.median(temp), max(temp) - min(temp), abweichungMedian(temp), np.var(temp), variationsKoeffizient(temp), np.cov(temp)))
-        file.write("Quartile: ")
-        for data in quartile(temp):
-            file.write("%d, " % (data))
+        quartiles = quartile(temp)
+        file.write("Quartilsabstand: %d" % (quartiles[2] - quartiles[0]))
+        file.write("\nQuartile: ")
+        intTemp = 1
+        for data in quartiles:
+            file.write("q%d: %d, " % (intTemp * 25, data))
+            intTemp += 1
         file.write("\nDezile: ")
+        intTemp = 1
         for data in dezile(temp):
-            file.write("%d, " % (data))
+            file.write("d%d: %d, " % (intTemp, data))
+            intTemp += 1
         file.write("\n\n\n")
         i += 1
     file.close()

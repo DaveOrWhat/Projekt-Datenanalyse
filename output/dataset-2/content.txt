@@ -7,8 +7,9 @@ Mittlere Abweichung vom Median: 7.623
 Stichprobenvarianz: 77.562
 Variationskoeffizient: 0.004
 Kovarianz: 78.855
-Quartile: 2001, 2009, 2016, 2024, 
-Dezile: 1997, 2000, 2003, 2006, 2009, 2012, 2015, 2018, 2021, 2024, 
+Quartilsabstand: 15
+Quartile: q25: 2001, q50: 2009, q75: 2016, q100: 2024, 
+Dezile: d1: 1997, d2: 2000, d3: 2003, d4: 2006, d5: 2009, d6: 2012, d7: 2015, d8: 2018, d9: 2021, d10: 2024, 
 
 
 Variable Monat: 
@@ -20,8 +21,9 @@ Mittlere Abweichung vom Median: 5.410
 Stichprobenvarianz: 30.242
 Variationskoeffizient: 0.858
 Kovarianz: 30.746
-Quartile: 1, 1, 12, 12, 
-Dezile: 1, 1, 1, 1, 1, 12, 12, 12, 12, 12, 
+Quartilsabstand: 11
+Quartile: q25: 1, q50: 1, q75: 12, q100: 12, 
+Dezile: d1: 1, d2: 1, d3: 1, d4: 1, d5: 1, d6: 12, d7: 12, d8: 12, d9: 12, d10: 12, 
 
 
 Variable Beschaeftigte prozentual zu 2015: 
@@ -33,7 +35,8 @@ Mittlere Abweichung vom Median: 16.500
 Stichprobenvarianz: 604.595
 Variationskoeffizient: 0.212
 Kovarianz: 614.671
-Quartile: 100, 102, 124, 171, 
-Dezile: 97, 99, 100, 102, 102, 105, 114, 132, 165, 171, 
+Quartilsabstand: 24
+Quartile: q25: 100, q50: 102, q75: 124, q100: 171, 
+Dezile: d1: 97, d2: 99, d3: 100, d4: 102, d5: 102, d6: 105, d7: 114, d8: 132, d9: 165, d10: 171, 
 
 
