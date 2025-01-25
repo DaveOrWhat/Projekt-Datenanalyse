@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mpl_dates
 import matplotlib.ticker as mpl_tick
-import datetime
 from statistics import mean, median, mode, multimode
 import numpy as np
-import pandas as pd
 import csv
+from scipy.optimize import curve_fit
 
 
 
@@ -191,7 +190,7 @@ def outputToFile(fileName, array, beschreibung):
     file.close()
             
     
-def boxWhiskerPlot(filePath, fileName, data):
+def boxWhiskerPlot(filePath, fileName, data, yLabel):
     i = 0
     while i < len(data[0]):
         temp = []
@@ -199,40 +198,97 @@ def boxWhiskerPlot(filePath, fileName, data):
         newfileName += fileName[i] 
         newfileName += '.jpg'
         for content in data:
-            temp.append(content[i])
+            if (i > 1) and ((filePath == 'output/dataset-1/boxWhiskerPlot-') or (filePath == 'output/dataset-3/boxWhiskerPlot-')):
+                temp.append(content[i] / 1000000)
+            else:
+                temp.append(content[i])
         plt.boxplot(temp)
         plt.title(fileName[i])
-        plt.savefig(newfileName)
-        #plt.show()
+        plt.ylabel(yLabel[i])
+        plt.savefig(newfileName, dpi = 5000)
+        plt.show()
         i += 1
+    #boxWhiskerPlot('output/dataset-1/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'Elektrizizaetserzeugung-'], data1Array)
         
-def scatterPlot(fileName, data):
+def scatterPlot(fileName, data, title, yLabel):
     time = []
     value = []
     if len(data[0]) > 3:
         value2 = []
     for content in data:
-        time.append(content[0])
-        value.append(content[2])
+        time.append(content[0] + (content[1] / 12))
+        if fileName != 'output/dataset-2/scatterPlot.jpg':
+            value.append(content[2] / 1000000)
+        else:
+            value.append(content[2])
         if len(data[0]) > 3:
-            value2.append(content[3])
+            value2.append(content[3] / 1000000)
 
-    plt.scatter(time, value)
+    plt.scatter(time, value, color = 'blue', label = 'Ankuenfte')
     if len(data[0]) > 3:
         plt.scatter(time, value2, color = 'red', label = 'Uebernachtungen')
-    plt.title("First ScatterPlot")
+        
+        #Curvefitting
+        # Initial guess for the parameters [A, B, C, D]
+        initial_guess = [4, 6.99, -1991, 7]
+        
+        # Perform the curve fitting
+        params, covariance = curve_fit(sine_function, time, value, p0=initial_guess)
+
+        # Extract the fitted parameters
+        A_fit, B_fit, C_fit, D_fit = params
+        
+        print(f"Fitted parameters: A={A_fit}, B={B_fit}, C={C_fit}, D={D_fit}")
+        # Generate y values using the fitted parameters
+        new_y = []
+        for l in time:
+            new_y.append(sine_function(l, A_fit, B_fit, C_fit, D_fit))
+        
+        label1 = ("Curvefit mit: %.3f * sin(%.3f * x + %.3f) + %.3f" % (A_fit, B_fit, C_fit, D_fit))
+        plt.plot(time, new_y, color = 'orange', label = label1)
+        
+        # Initial guess for the parameters [A, B, C, D]
+        initial_guess = [-12, 6.74, -1992, 28]
+        
+        # Perform the curve fitting
+        params, covariance = curve_fit(sine_function, time, value2, p0=initial_guess)
+        
+        # Extract the fitted parameters
+        A_fit, B_fit, C_fit, D_fit = params
+        
+        print(f"Fitted parameters: A={A_fit}, B={B_fit}, C={C_fit}, D={D_fit}")
+        # Generate y values using the fitted parameters
+        
+        new_y2 = []
+        for l in time:
+            new_y2.append(sine_function(l, A_fit, B_fit, C_fit, D_fit))
+        label2 = ("Curvefit mit: %.3f * sin(%.3f * x + %.3f) + %.3f" % (A_fit, B_fit, C_fit, D_fit))
+        plt.plot(time, new_y2, color = 'green', label = label2)
+        
+        plt.legend(['Ankuenfte', 'Uebernachtungen'])#, loc = 'upper center', bbox_to_anchor = (0.5, -0.1), ncol = 2)
+        plt.legend(['Ankuenfte', 'Uebernachtungen', label1, label2], loc = 'upper center', bbox_to_anchor = (1.5, 0.7), ncol = 1)
+        
+    plt.title(title)
+        
     
-    plt.xlabel("Jahr")
+    plt.xlabel('Jahr')
     plt.xlim(min(time) - 1, max(time) + 1)
-    #plt.set_major_formatter(mpl_dates.DateFormatter('%Y'))
     
-    plt.ylabel("Elektrizitätserzeung (MWh)")
-    plt.ylim(min(value) * 0.8 , max(value) * 1.1)
-    
-    
-    #plt.savefig(newfileName)
-    
+    plt.ylabel(yLabel)
+    #plt.ylim(min(value) * 0.8 , max(value) * 1.1)
+    plt.savefig(fileName, bbox_inches = 'tight', dpi = 5000)
     plt.show()
+    
+    if fileName == 'output/dataset-2/scatterPlot.jpg':
+        plt.plot(time, value, color = 'blue', label = 'Beschaeftigte')
+        plt.title(title)
+        plt.xlabel('Jahr')
+        plt.xlim(min(time) - 1, max(time) + 1)
+        plt.ylabel(yLabel)
+        plt.savefig(fileName[:-15] + 'linePlot.jpg', dpi = 5000)
+        plt.show()
+        
+#scatterPlot('output/dataset-3/scatterPlot.jpg', data3Array)
         
 def urlist(filePath, data, fileName):
     i = 0
@@ -263,14 +319,44 @@ def ranglist(filePath, data, fileName):
             for content in temp:
                 writer.writerow([str(content)])
         i += 1
-            
         
+def histogram(data, fileName):
+    jahresDurchschnitt = []
+    jahre = []
+    i = 0
+    j = 0
+    while i < len(data):
+        if (i != 0):
+            if (data[i][0] != data[i-1][0]):
+                j += 1
+                jahresDurchschnitt.append(data[i][2])
+                jahre.append(data[i][0])
+            else:
+                jahresDurchschnitt[j] += data[i][2]
+        else:
+            jahre.append(data[i][0])
+            jahresDurchschnitt.append(data[i][2])
+        print("i: %d" % (i))
+        i += 1
+    i = 0
+    while i < len(jahresDurchschnitt):
+        jahresDurchschnitt[i] = jahresDurchschnitt[i] / 3 / 1000000
+        i += 1
+    plt.bar(jahre, jahresDurchschnitt)
+    plt.title("Energieerzeugung im Schnitt pro Jahr durch Steinkohle")
+    plt.xlabel("Jahre")
+    plt.ylabel("Energieerzeugung in TWh")
+    plt.savefig(fileName, dpi = 5000)
+    plt.show()
+    
+def sine_function(x, A, B, C, D):
+    return A * np.sin(B * x + C) + D
+    
+
 
 # statistic Funktionen https://www.python4data.science/de/latest/workspace/pandas/descriptive-statistics.html
 
-# bestimmen des Modus durch mode() wenn nur der erste Modus bestimmt werden soll, multimode() wenn eine Liste aller Modus bestimmt werden soll    
-# berechenn des Median durch median()
-# berechnen des Mittelwerts durch mean()
+# bestimmen des Modus durch mode() wenn nur der erste Modus bestimmt werden soll, multimode() wenn eine Liste aller Modus bestimmt werden soll
     
 data1Array = []
 data2Array = []
@@ -314,6 +400,9 @@ for teilA in data3Array:
 
 data3Array.sort()
 
+
+histogram(data1Array, 'output/dataset-1/histogramm.jpg')
+
 urlist('output/dataset-1/urliste-', data1Array, ['Jahr', 'Monat', 'Elektrizitaetserzeugung'])
 urlist('output/dataset-2/urliste-', data2Array, ['Jahr', 'Monat', 'Beschaeftigte'])
 urlist('output/dataset-3/urliste-', data3Array, ['Jahr', 'Monat', 'Ankuenfte', 'Uebernachtungen'])
@@ -324,12 +413,14 @@ ranglist('output/dataset-2/rangliste-', data2Array, ['Jahr', 'Monat', 'Beschaeft
 ranglist('output/dataset-3/rangliste-', data3Array, ['Jahr', 'Monat', 'Ankuenfte', 'Uebernachtungen'])
 ranglist('output/dataset-4/rangliste-', data4Array, ['Zeit', 'Lux'])
 
-boxWhiskerPlot('output/dataset-1/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'Elektrizizaetserzeugung-'], data1Array)
-boxWhiskerPlot('output/dataset-2/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'Beschäftigte-'], data2Array)
-boxWhiskerPlot('output/dataset-3/boxWhiskerPlot-', ['Jahr-', 'Monat-', 'AnzahlUnterkünfte-', 'AnzahlUebernachtungen-'], data3Array)
-boxWhiskerPlot('output/dataset-4/boxWhiskerPlot-', ['Zeit-', 'Lux-'], data4Array)
+boxWhiskerPlot('output/dataset-1/boxWhiskerPlot-', ['Jahr', 'Monat', 'Elektrizizaetserzeugung'], data1Array, ['', '', 'in TWh'])
+boxWhiskerPlot('output/dataset-2/boxWhiskerPlot-', ['Jahr', 'Monat', 'Beschäftigte'], data2Array, ['', '', 'prozentual zu 2015'])
+boxWhiskerPlot('output/dataset-3/boxWhiskerPlot-', ['Jahr', 'Monat', 'AnzahlAnkuenfte', 'AnzahlUebernachtungen'], data3Array, ['', '', 'in Mio', 'in Mio'])
+boxWhiskerPlot('output/dataset-4/boxWhiskerPlot-', ['Zeit', 'Lux'], data4Array, ['', '', 'Lichtstärke in Lux'])
 
-scatterPlot('output/dataset-3/scatterPlot.jpg', data3Array)
+scatterPlot('output/dataset-1/scatterPlot.jpg', data1Array, 'Energieerzeugung aus Steinkohle nach Jahren', 'Energieerzeugung in TWh')
+scatterPlot('output/dataset-2/scatterPlot.jpg', data2Array, 'Beschäftige im Einzelhandel im Vergleich zu 2015 nach Jahren', 'Beschaeftigte prozentual zu 2015')
+scatterPlot('output/dataset-3/scatterPlot.jpg', data3Array, 'Ankuenfte und Uebernachtungen in Beherbergungsbetrieben nach Jahren', 'Anzahl in Mio')
 
 outputToFile('output/dataset-1/content.txt', data1Array, "Variable Jahr: ;Variable Monat: ;Variable Elektrizizaetserzeugung netto in MWh: ")
 outputToFile('output/dataset-2/content.txt', data2Array, "Variable Jahr: ;Variable Monat: ;Variable Beschaeftigte prozentual zu 2015: ")
