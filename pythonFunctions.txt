@@ -10,7 +10,7 @@ multimode() - Modus bestimmen
 aus der Bibliothek matplotlib:
 scatter() - zum erstellen eines scatterPlots
 plot() - zum erstellen eines linePlots
-diveres Funktionen zum individualisieren der Plots wie z.B. anpassen des Titels
+diverse Funktionen zum individualisieren der Plots wie z.B. anpassen des Titels
 
 aus der Bibliothek numpy:
 std() - Standartabweichung
@@ -20,8 +20,10 @@ var() - Stichprobenvarianz
 aus der Bibliothek csv:
 open() - oeffnen von Dateien
 write() - schreiben in Dateien
+close() - schliessen von Dateien
 
 
+Python build in Funktionen:
 abs() - Absolutwert
 len() - zum bestimmen der Länge der Daten
 sort() - zum sortieren der Daten
