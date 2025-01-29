@@ -429,43 +429,9 @@ outputToFile('output/dataset-4/content.txt', data4Array, "Variable Zeit: ;Variab
 
 
 
-"""
+
 with open('output/dataset-3/konsolidiert.csv', 'w', newline = '') as file:
-    writer = csv.writer(file, delimiter = ';')
+    writer = csv.writer(file, delimiter = ',')
     for content in data3Array:
         writer.writerow([str(content[0]), intToMonth(content[1]), str(content[2]), str(content[3])])
     i += 1
-"""
-
-
-
-
-"""
-fig, ax1 = plt.subplots()
-
-ax1.set_xlabel("Jahr")                                  #x-Achsen Name hinzufügen
-ax1.set_ylabel("Gesamtenergieproduktion in GW")
-ax1.plot(jahre, steinkohleErzeugung, '-ob', label='Steinkohlestrom')
-ax1.plot(jahre, gesamtErzeugung, '-og', label='Gesamtstrom')
-
-plt.legend(loc="upper right")
-
-ax1.xaxis.set_major_locator(mpl_dates.YearLocator())
-ax1.xaxis.set_major_formatter(mpl_dates.DateFormatter('%Y'))    #Datumsformat definiert, siehe https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
-ax1.xaxis.set_minor_locator(mpl_dates.MonthLocator())
-
-ax2 = ax1.twinx()
-
-ax2.set_ylabel("Kohlestrom prozentual an Gesamtproduktion", color='tab:red')
-ax2.plot(jahre, prozentualeErzeugung, '-or', label='Kohlestrom prozentual an Gesamtproduktion')
-ax2.tick_params(axis='y', labelcolor='tab:red')
-ax2.yaxis.set_major_formatter(mpl_tick.PercentFormatter(1.0, 0))  #y-Achse von Graph 2 auf Prozent einstellen für Werte von 0 bis 1 mit 0 Stellen nach dem Komma
-
-
-plt.legend()
-
-fig.tight_layout()
-
-plt.gcf().autofmt_xdate()                              #x-Achsen Beschriftung anwinkeln
-plt.show()
-"""
